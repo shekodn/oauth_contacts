@@ -1,0 +1,4 @@
+package: github.com/shekodn/oauth_contacts
+import:
+- package: github.com/julienschmidt/httprouter
+- package: github.com/sirupsen/logrus
