@@ -1,0 +1,9 @@
+<h1>{{.PageTitle}}</h1>
+
+<a href="/importContacts">Import Contacts From Google</a>
+
+<ul>
+    {{range .Contacts}}
+      <li>{{.Name}}</li>
+    {{end}}
+</ul>
