@@ -1,55 +1,42 @@
-package main
+package handlers
 
-import (
-
+import(
   "fmt"
-  "html/template"
   "net/http"
+  "os"
 
+  "github.com/joho/godotenv"
   "github.com/julienschmidt/httprouter"
-  "github.com/shekodn/oauth_contacts/version"
 
   "golang.org/x/net/context"
   "golang.org/x/oauth2"
   "google.golang.org/api/people/v1"
+  "golang.org/x/oauth2/google"
 )
-
-type Contact struct {
-    Name string
-}
-
-type ContactData struct {
-    PageTitle string
-    Contacts []Contact
-}
 
 var (
+  googleOauthConfig *oauth2.Config
 	// TODO: randomize it
 	oauthStateString = "pseudo-random"
-
-  data = ContactData{
-    PageTitle: "Contacts",
-    Contacts: []Contact{
-        {Name: "Aníbal Troilo"},
-        {Name: "Juan d'Arienzo"},
-        {Name: "Julio Sosa"},
-    },
-  }
 )
 
-func home(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-  log.Info("Processing URL ", r.URL.Path)
-  http.Redirect(w, r, "/contacts", http.StatusMovedPermanently)
+func init() {
+
+  err := godotenv.Load()
+
+  if err != nil {
+    log.Fatal("Error loading .env file")
+  }
+
+	googleOauthConfig = &oauth2.Config{
+		RedirectURL:  "http://localhost:" + os.Getenv("PORT") + "/callback",
+		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
+    Scopes:       []string{"https://www.googleapis.com/auth/contacts.readonly"},
+		Endpoint:     google.Endpoint,
+	}
 }
 
-func getContacts(w http.ResponseWriter, r *http.Request,  _ httprouter.Params) {
-  log.Info("Processing URL ", r.URL.Path)
-
-  tmpl := template.Must(template.ParseFiles("contact/contact.html"))
-  tmpl.Execute(w, data)
-}
-
-// OAuth 
 func importContacts(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
   log.Info("Processing URL ", r.URL.Path)
 
@@ -99,7 +86,7 @@ func getUserInfo(state string, code string) (error) {
 
   log.Info("Client is sending access token to protected resource")
   r, err := srv.People.Connections.List("people/me").PageSize(5).
-        PersonFields("names,emailAddresses").Do()
+      PersonFields("names,emailAddresses").Do()
   if err != nil {
       log.Fatalf("Unable to retrieve people. %v", err)
       return fmt.Errorf("Error: %v", err)
@@ -107,7 +94,7 @@ func getUserInfo(state string, code string) (error) {
 
   log.Info("Client is receiving the protected resource")
   if len(r.Connections) > 0 {
-      fmt.Print("Listing connection names:\n", )
+      fmt.Print("Listing connection \n", )
       for _, c := range r.Connections {
           names := c.Names
           if len(names) > 0 {
@@ -120,9 +107,4 @@ func getUserInfo(state string, code string) (error) {
   }
 
   return nil
-}
-
-func getVersion(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-  log.Info("Request received: getVersion")
-  fmt.Fprintf(w, "Repo: %s, Commit: %s, Version: %s", version.REPO, version.COMMIT, version.RELEASE)
 }

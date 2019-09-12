@@ -1,8 +1,8 @@
 hash: e9bfc4bf952f5d9894aa32b9478e918ffa9dc95a84d377faaa7dec02d2648f61
-updated: 2019-09-07T15:18:04.690321-05:00
+updated: 2019-09-09T11:43:13.339945-05:00
 imports:
 - name: cloud.google.com/go
-  version: 32fa00377bdcfce7f307ebca24f5916048356e56
+  version: d4d57431b6a369d42130c17867ad7d92b6ff2970
   subpackages:
   - compute/metadata
 - name: github.com/golang/groupcache
@@ -48,7 +48,7 @@ imports:
   - trace/propagation
   - trace/tracestate
 - name: golang.org/x/net
-  version: ba9fcec4b297b415637633c5a6e8fa592e4a16c3
+  version: a7b16738d86b947dd0fadb08ca2c2342b51958b6
   subpackages:
   - context
   - context/ctxhttp
@@ -77,7 +77,7 @@ imports:
   - unicode/bidi
   - unicode/norm
 - name: google.golang.org/api
-  version: dd6d584b01aeeb047f48d9fc3a1fa8d8d3af4331
+  version: 7a8c1af7297d20cbf380c4cfd665c7dbd1fed1a7
   subpackages:
   - gensupport
   - googleapi

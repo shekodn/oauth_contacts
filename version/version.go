@@ -1,10 +1,10 @@
 package version
 
 var (
-	// RELEASE returns the release version
-	RELEASE = "UNKNOWN"
-	// REPO returns the git repository URL
-	REPO = "UNKNOWN"
-	// COMMIT returns the short sha from git
-	COMMIT = "UNKNOWN"
+	// BuildTime is a time label of the moment when the binary was built
+	BuildTime = "unset"
+	// Commit is a last commit hash at the moment when the binary was built
+	Commit = "unset"
+	// Release is a semantic version of current build
+	Release = "unset"
 )
