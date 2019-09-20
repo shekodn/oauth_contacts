@@ -1,4 +1,4 @@
-APP?=app
+APP?=oauth_contacts
 PORT?=8000
 
 RELEASE?=0.0.0
