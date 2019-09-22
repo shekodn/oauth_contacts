@@ -94,7 +94,6 @@ func getUserInfo(state string, code string) (error) {
 
   log.Info("Client is receiving the protected resource")
   if len(r.Connections) > 0 {
-      fmt.Print("Listing connection \n", )
       for _, c := range r.Connections {
           names := c.Names
           if len(names) > 0 {
