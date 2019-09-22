@@ -4,6 +4,6 @@ ENV PORT 8000
 
 EXPOSE $PORT
 
-COPY app /
+COPY oauth_contacts /
 
-CMD ["/app"]
+CMD ["/oauth_contacts"]
