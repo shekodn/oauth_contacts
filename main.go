@@ -17,7 +17,7 @@ var (
 
 // Run server: go build -o app && ./app
 func main() {
-  log.Printf("Starting the service...\n)
+  log.Printf("Starting the service...\n")
   r := handlers.Router(version.BuildTime, version.Commit, version.Release)
   log.Print("The service is ready to listen and serve.")
   log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), r))
